@@ -10,6 +10,11 @@ services:
             MYSQL_DATABASE: "${MYSQL_DATABASE:-glpi}"
             MYSQL_USER: "${MYSQL_USER:-glpi}"
             MYSQL_PASSWORD: "${MYSQL_PASSWORD:-glpi}"
+        networks:
+            default:
+                ipv4_address: 172.20.0.3
+                aliases:
+                    - "${APPLICATION_NETWORK_ALIAS:-glpi.local}"
         ports:
             - "3306:3306"
         volumes:
@@ -24,3 +29,6 @@ networks:
     default:
         driver: "bridge"
         name: "${NETWORK_NAME:-glpi_bridge}"
+        ipam:
+            config:
+                - subnet: "172.20.0.1/16"
